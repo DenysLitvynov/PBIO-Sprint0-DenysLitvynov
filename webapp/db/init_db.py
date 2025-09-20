@@ -1,4 +1,5 @@
-""" Autor: Denys Litvynov Lymanets 
+""" 
+Autor: Denys Litvynov Lymanets 
 Fecha: 20-09-2025 
 Descripción: Script para la creación e introducción de datos fake en la bd.  
 
@@ -19,18 +20,36 @@ DB_FILE = BASE_DIR / "measurements.db"
 
 
 # ---------------------------------------------------------
-# Cursor: cursor, String: filepath -> ejecutar_fichero_sql() 
 # ---------------------------------------------------------
+
 def ejecutar_fichero_sql(cursor, filepath):
+    """
+    Método para ejecutar scripts sql.
+    
+    Args:
+        Cursor (cursor): objeto para ejecutar sentencias SQL
+    
+    Returns:
+        None: No devuelve ningun valor. 
+    """
     with open(filepath, "r", encoding = "utf-8") as f: 
         sql_script = f.read()
     cursor.executescript(sql_script)
  
 
 # ---------------------------------------------------------
-# inicializar_db()
 # ---------------------------------------------------------
+
 def inicializar_db(): 
+    """
+    Método para ejecutar ficheros sql llamando al método anterior. 
+    
+    Args:
+        None (type): No recibe nada
+    
+    Returns:
+        None: No devuelve nada
+    """
     conn = sqlite3.connect(DB_FILE)
     cursor = conn.cursor() # objeto que ejecuta sentencias SQL
     ejecutar_fichero_sql(cursor, SCHEMA_FILE) # crear tabla
