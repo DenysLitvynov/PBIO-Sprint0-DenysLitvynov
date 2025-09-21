@@ -5,8 +5,8 @@
 __pycache__/
 *.pyc
 
-# Local SQLite database (opcional, puedes descomentar si quieres versionarla)
-# db/measurements.db
+# Archivos de bases de datos locales (ignora todos los .db)
+*.db
 
 # Archivos temporales de Vim
 *.swp
