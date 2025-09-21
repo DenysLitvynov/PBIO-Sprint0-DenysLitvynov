@@ -1,18 +1,19 @@
 """ 
 Autor: Denys Litvynov Lymanets 
 Fecha: 20-09-2025 
-Descripción: Fixture global para crear una base de datos SQLite en memoria con datos fake para los tests.
+Descripción: Fixture global para crear una base de datos SQLite temporal con datos fake para los tests.
 """
 
 # ---------------------------------------------------------
 
-# conftest.py
 import pytest
 import sqlite3
 from pathlib import Path
 from webapp.db.db_utils import DBInitializer
 import tempfile
 import os
+
+# ---------------------------------------------------------
 
 @pytest.fixture
 def db_temporal():
@@ -36,3 +37,6 @@ def db_temporal():
 
     # Eliminar archivo al final
     os.remove(ruta)
+
+# ---------------------------------------------------------
+# ---------------------------------------------------------
