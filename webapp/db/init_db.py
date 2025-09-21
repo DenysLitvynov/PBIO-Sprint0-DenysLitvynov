@@ -1,69 +1,39 @@
 """ 
 Autor: Denys Litvynov Lymanets 
 Fecha: 20-09-2025 
-Descripción: Script para la creación e introducción de datos fake en la bd.  
-
+Descripción: 
 """
 
 # ---------------------------------------------------------
 
-from pathlib import Path
 import sqlite3
-
-# Rutas relativas a los archivos 
-BASE_DIR = Path(__file__).resolve().parent
-SCHEMA_FILE = BASE_DIR / "sql" / "create_measurements.sql"
-INSERT_FILE = BASE_DIR / "sql" / "insert_measurements.sql"
-DB_FILE = BASE_DIR / "measurements.db"
+from pathlib import Path
+from webapp.db.db_utils import DBInitializer
 
 # ---------------------------------------------------------
 
+def main():
+    base_dir = Path(__file__).resolve().parent
+    schema_path = base_dir / "sql" / "create_measurements.sql"
+    insert_path = base_dir / "sql" / "insert_measurements.sql"
+    db_file = base_dir / "measurements.db"
 
-# ---------------------------------------------------------
-# ---------------------------------------------------------
+    conn = None
+    try:
+        conn = sqlite3.connect(db_file)
+        initializer = DBInitializer(schema_path, insert_path)
+        initializer.inicializar(conn, with_fake_data=True)
+        print("Base de datos de desarrollo creada en", db_file)
+    except Exception as e:
+        print("Error creando la base de datos:", e)
+    finally:
+        if conn:
+            conn.close()
 
-def ejecutar_fichero_sql(cursor, filepath):
-    """
-    Método para ejecutar scripts sql.
-    
-    Args:
-        Cursor (cursor): objeto para ejecutar sentencias SQL
-    
-    Returns:
-        None: No devuelve ningun valor. 
-    """
-    with open(filepath, "r", encoding = "utf-8") as f: 
-        sql_script = f.read()
-    cursor.executescript(sql_script)
- 
-
-# ---------------------------------------------------------
-# ---------------------------------------------------------
-
-def inicializar_db(): 
-    """
-    Método para ejecutar ficheros sql llamando al método anterior. 
-    
-    Args:
-        None (type): No recibe nada
-    
-    Returns:
-        None: No devuelve nada
-    """
-    conn = sqlite3.connect(DB_FILE)
-    cursor = conn.cursor() # objeto que ejecuta sentencias SQL
-    ejecutar_fichero_sql(cursor, SCHEMA_FILE) # crear tabla
-    ejecutar_fichero_sql(cursor, INSERT_FILE) # insertar datos fake
-    conn.commit()
-    conn.close()
-    print("Base de datos creada en", DB_FILE)
-    
-
-# --------------------------------------------------------- 
 # ---------------------------------------------------------
 
 if __name__ == "__main__":
-    inicializar_db()
+    main()
 
 # ---------------------------------------------------------
-# ---------------------------------------------------------
+
