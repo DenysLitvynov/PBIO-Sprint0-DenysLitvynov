@@ -188,55 +188,70 @@ public class EscanerIBeacons {
     } // ()
 
     public void inicializarBlueTooth() {
-        Log.d(ETIQUETA_LOG, " inicializarBlueTooth(): obtenemos adaptador BT ");
+        Log.i(ETIQUETA_LOG, "Inicializando Bluetooth...");
 
         BluetoothAdapter bta = BluetoothAdapter.getDefaultAdapter();
+        if (bta == null) {
+            Log.e(ETIQUETA_LOG, "Error: No hay adaptador Bluetooth disponible en el dispositivo");
+            return;
+        }
 
-        Log.d(ETIQUETA_LOG, " inicializarBlueTooth(): habilitamos adaptador BT ");
-
-        if (ActivityCompat.checkSelfPermission(context, Manifest.permission.BLUETOOTH_CONNECT) == PackageManager.PERMISSION_GRANTED) {
-            bta.enable();
+        // Verificar si Bluetooth ya está habilitado
+        if (bta.isEnabled()) {
+            Log.d(ETIQUETA_LOG, "Bluetooth ya está habilitado");
         } else {
-            Log.e(ETIQUETA_LOG, "No tengo permiso BLUETOOTH_CONNECT para habilitar el adaptador");
+            Log.d(ETIQUETA_LOG, "Bluetooth no está habilitado, se intentará habilitar después de obtener permisos");
+            // No intentamos habilitar aquí, lo haremos tras confirmar permisos
         }
 
-        Log.d(ETIQUETA_LOG, " inicializarBlueTooth(): habilitado =  " + bta.isEnabled() );
-
-        Log.d(ETIQUETA_LOG, " inicializarBlueTooth(): estado =  " + bta.getState() );
-
-        Log.d(ETIQUETA_LOG, " inicializarBlueTooth(): obtenemos escaner btle ");
-
-        this.elEscanner = bta.getBluetoothLeScanner();
-
-        if ( this.elEscanner == null ) {
-            Log.d(ETIQUETA_LOG, " inicializarBlueTooth(): Socorro: NO hemos obtenido escaner btle  !!!!");
-
+        // Obtener el escáner solo si Bluetooth está habilitado
+        if (bta.isEnabled()) {
+            this.elEscanner = bta.getBluetoothLeScanner();
+            if (this.elEscanner == null) {
+                Log.e(ETIQUETA_LOG, "Error: No se pudo obtener el escáner Bluetooth LE");
+            } else {
+                Log.d(ETIQUETA_LOG, "Escáner Bluetooth LE obtenido correctamente");
+            }
         }
 
-        Log.d(ETIQUETA_LOG, " inicializarBlueTooth(): voy a perdir permisos (si no los tuviera) !!!!");
-
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.S) { // Android 12+
+        // Solicitar permisos si es necesario
+        Log.d(ETIQUETA_LOG, "Verificando permisos...");
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.S) {
             if (ContextCompat.checkSelfPermission(context, Manifest.permission.BLUETOOTH_SCAN) != PackageManager.PERMISSION_GRANTED
                     || ContextCompat.checkSelfPermission(context, Manifest.permission.BLUETOOTH_CONNECT) != PackageManager.PERMISSION_GRANTED) {
+                Log.d(ETIQUETA_LOG, "Solicitando permisos BLUETOOTH_SCAN y BLUETOOTH_CONNECT");
                 ActivityCompat.requestPermissions(
                         (android.app.Activity) context,
                         new String[]{Manifest.permission.BLUETOOTH_SCAN, Manifest.permission.BLUETOOTH_CONNECT},
                         CODIGO_PETICION_PERMISOS
                 );
+            } else {
+                Log.d(ETIQUETA_LOG, "Permisos BLUETOOTH_SCAN y BLUETOOTH_CONNECT ya concedidos");
+                // Si los permisos ya están concedidos y Bluetooth no está habilitado, intentar habilitarlo
+                if (!bta.isEnabled() && ActivityCompat.checkSelfPermission(context, Manifest.permission.BLUETOOTH_CONNECT) == PackageManager.PERMISSION_GRANTED) {
+                    bta.enable();
+                    Log.d(ETIQUETA_LOG, "Bluetooth habilitado");
+                }
             }
-        } else { // versiones anteriores
+        } else {
             if (ContextCompat.checkSelfPermission(context, Manifest.permission.BLUETOOTH) != PackageManager.PERMISSION_GRANTED
                     || ContextCompat.checkSelfPermission(context, Manifest.permission.BLUETOOTH_ADMIN) != PackageManager.PERMISSION_GRANTED
                     || ContextCompat.checkSelfPermission(context, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
+                Log.d(ETIQUETA_LOG, "Solicitando permisos BLUETOOTH, BLUETOOTH_ADMIN y ACCESS_FINE_LOCATION");
                 ActivityCompat.requestPermissions(
                         (android.app.Activity) context,
                         new String[]{Manifest.permission.BLUETOOTH, Manifest.permission.BLUETOOTH_ADMIN, Manifest.permission.ACCESS_FINE_LOCATION},
                         CODIGO_PETICION_PERMISOS
                 );
+            } else {
+                Log.d(ETIQUETA_LOG, "Permisos para versiones anteriores ya concedidos");
+                if (!bta.isEnabled()) {
+                    bta.enable();
+                    Log.d(ETIQUETA_LOG, "Bluetooth habilitado");
+                }
             }
         }
-
-    } // ()
+    }
 
     public void iniciarEscaneoAutomatico(String nombreDispositivo) {
         inicializarBlueTooth();
@@ -249,7 +264,7 @@ public class EscanerIBeacons {
     }
 
     private String convertirTramaAJson(TramaIBeacon tib) {
-        int medida = Utilidades.bytesToInt(tib.getMajor());
+        int medida = Utilidades.bytesToInt(tib.getMinor());
         return "{\"medida\": " + medida + "}";
     }
 }

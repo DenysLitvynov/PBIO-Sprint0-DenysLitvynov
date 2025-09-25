@@ -26,7 +26,7 @@ public class MainActivity extends AppCompatActivity {
 
         escaner = new EscanerIBeacons(this, jsonMedida -> {
             runOnUiThread(() -> {
-                tvMedidas.append("Medida recibida: " + jsonMedida + "\n");
+                tvMedidas.setText("Última medida recibida: " + jsonMedida);
                 Toast.makeText(this, "Enviando a servidor...", Toast.LENGTH_SHORT).show();
             });
             logicaFake.guardarMedida(jsonMedida, urlServidor);
