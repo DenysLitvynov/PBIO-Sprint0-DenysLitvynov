@@ -14,7 +14,7 @@ public class MainActivity extends AppCompatActivity {
     private EscanerIBeacons escaner;
     private LogicaFake logicaFake = new LogicaFake();
     private TextView tvMedidas;
-    private String urlServidor = "https://httpbin.org/post";
+    private String urlServidor = "https://webhook.site/d839c356-4b86-4e52-b23a-6dc7b339a7c9";
     private static final String ETIQUETA_LOG = ">>>>";
 
     @Override
