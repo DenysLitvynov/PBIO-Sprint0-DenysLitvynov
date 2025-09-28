@@ -7,6 +7,7 @@ Descripción: Este archivo define los endpoints de la API.
 
 # ---------------------------------------------------------
 
+from os import stat
 from re import I
 from fastapi import APIRouter, Depends, HTTPException
 from pydantic import BaseModel
@@ -39,8 +40,20 @@ class Medida(BaseModel):
 # Endpoint POST para /api/guardar
 @router.post("/guardar")
 def guardar_medicion(medida: Medida, logica: Logica = Depends(get_logica)):
-    pass
-
+    """
+    Endpoint para guardar una medición recibida desde la app Android.
+    
+    Args:
+        medida (Medida): Objeto con el campo 'medida'.
+    
+    Returns:
+        dict: Mensaje de éxito.
+    """ 
+    try: 
+        logica.guardar_medida(medida.medida)
+        return {"message": "Medición guardada exitosamente"}
+    except RuntimeError as e: 
+        raise HTTPException(status_code=500, detail=str(e))
 
 # ---------------------------------------------------------
 # ---------------------------------------------------------
