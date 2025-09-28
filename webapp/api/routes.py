@@ -10,7 +10,7 @@ Descripción: Este archivo define los endpoints de la API.
 from re import I
 from fastapi import APIRouter, Depends, HTTPException
 from pydantic import BaseModel
-from webapp.logic.logica import Logica
+from logic.logica import Logica
 from pathlib import Path
 
 # ---------------------------------------------------------
@@ -29,7 +29,7 @@ def get_logica():
 # Definimos un modelo Pydantic para validar el cuerpo de POST.
 # Esto asegura que el JSON entrante tenga { "medida": "valor" }.
 class Medida(BaseModel):
-    medida: str  # Campo requerido de tipo string.
+    medida: int  # Campo requerido de tipo string.
 
 
 # ---------------------------------------------------------

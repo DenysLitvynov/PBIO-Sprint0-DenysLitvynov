@@ -8,7 +8,7 @@ Descripción:
 
 import sqlite3
 from pathlib import Path
-from webapp.db.db_utils import DBInitializer
+from db_utils import DBInitializer
 
 # ---------------------------------------------------------
 

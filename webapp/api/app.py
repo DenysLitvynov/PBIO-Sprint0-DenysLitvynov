@@ -20,6 +20,9 @@ from .routes import router as api_router
 # Creo instancia de FastAPI
 app = FastAPI(title = "API REST para Proyecto Biometría y Medio Ambiente", version = "1.0.0")
 
+# Registrar el router de routes.py con prefijo /api
+app.include_router(api_router, prefix="/api")
+
 # ---------------------------------------------------------
 
 # Esto evita errores de CORS cuando el frontend (e.g., en browser) llama a la API.
@@ -34,12 +37,13 @@ app.add_middleware(
 # ---------------------------------------------------------
 
 # Montar archivos estáticos para servir el frontend (HTML, CSS, JS) 
-BASE_DIR = Path(__file__).resolve().parent.parent  # apunta al project-root
-app.mount("/static", StaticFiles(directory=BASE_DIR / "frontend" / "static"), name="static")
+# BASE_DIR = Path(__file__).resolve().parent.parent  # apunta al project-root
+# app.mount("/static", StaticFiles(directory=BASE_DIR / "static"), name="static")
 
 @app.get("/")
 async def root():
-    return FileResponse(Path("frontend/templates/index.html"))
+    #return FileResponse(Path("/templates/index.html"))
+    return {"message": "API REST corriendo. Usa /api/guardar (POST) o /api/ultima (GET)."}
 
 # ---------------------------------------------------------
 

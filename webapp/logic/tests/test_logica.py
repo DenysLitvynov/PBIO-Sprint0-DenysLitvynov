@@ -6,7 +6,7 @@ Descripción: Tests para la clase Logica usando la base de datos en memoria.
 
 # ---------------------------------------------------------
 
-from webapp.bussines_logic.logica import Logica
+from logica import Logica
 
 # ---------------------------------------------------------
 
