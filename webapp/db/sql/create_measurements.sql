@@ -3,7 +3,7 @@
 -- Descripción: Script sql para la creación de la base de datos. 
 
 CREATE TABLE IF NOT EXISTS measurements (
-    measurement REAL NO NULL,
+    measurement INTEGER NO NULL,
     timestamp TEXT NO NULL
 );
 

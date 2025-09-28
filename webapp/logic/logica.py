@@ -8,6 +8,7 @@ Descripción: Clase para implementar la lógica de negocio.
 # ---------------------------------------------------------
 
 import sqlite3
+from datetime import datetime
 
 # ---------------------------------------------------------
 
@@ -45,8 +46,23 @@ class Logica:
     # ---------------------------------------------------------
     # ---------------------------------------------------------
    
-    def guardar_medida(self, medida):
-        pass
+    def guardar_medida(self, medida: int):
+        
+        conn = None
+        try:
+            #timestamp actual 
+            now = datetime.now().isoformat()
+            conn = sqlite3.connect(self.ruta_bd)
+            cursor = conn.cursor()
+            cursor.execute(
+                    "INSERT INTO measurements (measurement, timestamp) VALUES (?, ?)", (medida, now)
+                    )
+            conn.commit()
+        except sqlite3.Error as e: 
+            raise RuntimeError (f"Error guardando en la base de datos: {e}")
+        finally: 
+            if conn: 
+                conn.close()
 
 
     # ---------------------------------------------------------
