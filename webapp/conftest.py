@@ -6,10 +6,12 @@ Descripción: Fixture global para crear una base de datos SQLite temporal con da
 
 # ---------------------------------------------------------
 
+import sys
 import pytest
 import sqlite3
 from pathlib import Path
-from webapp.db.db_utils import DBInitializer
+sys.path.append(str(Path(__file__).resolve().parent))
+from db.db_utils import DBInitializer
 import tempfile
 import os
 
