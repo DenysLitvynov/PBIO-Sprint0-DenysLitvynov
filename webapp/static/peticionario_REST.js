@@ -4,6 +4,8 @@ Fecha: 29-09-2025
 Descripción: Módulo encargado de realizar peticiones REST al backend. Contiene funciones de GET, POST, PUT y DELETE.
 */
 
+// ----------------------------------------------------------
+
 class PeticionarioREST {
     async hacerPeticionRest(method, url, body = null) {
         const options = {
@@ -22,3 +24,6 @@ class PeticionarioREST {
         return await response.json();
     }
 }
+
+// ----------------------------------------------------------
+

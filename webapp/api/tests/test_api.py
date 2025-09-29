@@ -9,7 +9,7 @@ Descripción: Tests para los endpoints REST de la API usando TestClient de FastA
 import pytest
 from fastapi.testclient import TestClient
 from api.app import app
-from api.routes import get_logica  # ✅ import correcto
+from api.routes import get_logica  
 from logic.logica import Logica
 
 # ---------------------------------------------------------
@@ -25,11 +25,11 @@ def override_get_logica(db_path):
 # ---------------------------------------------------------
 # ---------------------------------------------------------
 
-def test_post_guardar_medicion(db_temporal):
+def test_post_guardar_medida(db_temporal):
     app.dependency_overrides.clear()
     app.dependency_overrides[get_logica] = override_get_logica(db_temporal)
 
-    response = client.post("/api/guardar", json={"medida": 555})
+    response = client.post("/api/v1/guardar-medida", json={"medida": 555})
     assert response.status_code == 200
     assert "exitosamente" in response.json()["message"]
 
@@ -40,7 +40,7 @@ def test_get_ultima_medida(db_temporal):
     app.dependency_overrides.clear()
     app.dependency_overrides[get_logica] = override_get_logica(db_temporal)
 
-    response = client.get("/api/ultima")
+    response = client.get("/api/v1/ultima-medida")
     assert response.status_code == 200
     data = response.json()
     assert "medida" in data
@@ -60,7 +60,7 @@ def test_get_ultima_medida_sin_datos(tmp_path):
     app.dependency_overrides.clear()
     app.dependency_overrides[get_logica] = override_get_logica(str(db_file))
 
-    response = client.get("/api/ultima")
+    response = client.get("/api/v1/ultima-medida")
     assert response.status_code == 404
     assert "No hay mediciones" in response.json()["detail"]
 

@@ -26,20 +26,17 @@ def get_logica():
 # ---------------------------------------------------------
 # ---------------------------------------------------------
 
-
 # Definimos un modelo Pydantic para validar el cuerpo de POST.
 # Esto asegura que el JSON entrante tenga { "medida": "valor" }.
 class Medida(BaseModel):
     medida: int  # Campo requerido de tipo string.
 
-
 # ---------------------------------------------------------
 # ---------------------------------------------------------
 
-
-# Endpoint POST para /api/guardar
-@router.post("/guardar")
-def guardar_medicion(medida: Medida, logica: Logica = Depends(get_logica)):
+# Endpoint POST para /api/guardar-medida
+@router.post("/guardar-medida")
+def guardar_medida(medida: Medida, logica: Logica = Depends(get_logica)):
     """
     Endpoint para guardar una medición recibida desde la app Android.
     
@@ -51,15 +48,15 @@ def guardar_medicion(medida: Medida, logica: Logica = Depends(get_logica)):
     """ 
     try: 
         logica.guardar_medida(medida.medida)
-        return {"message": "Medición guardada exitosamente"}
+        return {"message": "Medida guardada exitosamente"}
     except RuntimeError as e: 
         raise HTTPException(status_code=500, detail=str(e))
 
 # ---------------------------------------------------------
 # ---------------------------------------------------------
 
-# Endpoint GET para /api/última
-@router.get("/ultima")
+# Endpoint GET para /api/última-medida
+@router.get("/ultima-medida")
 def obtener_ultima_medida(logica: Logica = Depends(get_logica)):        
     try: 
         resultado = logica.obtener_ultima_medida()
@@ -72,6 +69,3 @@ def obtener_ultima_medida(logica: Logica = Depends(get_logica)):
 # ---------------------------------------------------------
 # ---------------------------------------------------------
 
-
-# ---------------------------------------------------------
-# ---------------------------------------------------------

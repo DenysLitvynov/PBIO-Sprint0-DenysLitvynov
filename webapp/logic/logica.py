@@ -35,7 +35,7 @@ class Logica:
                 "SELECT measurement, timestamp FROM measurements ORDER BY timestamp DESC LIMIT 1"
             )
             fila = cursor.fetchone()
-            return fila[0] if fila else None
+            return fila[0] if fila else None # devuelvo solo la medida de la fila
         except sqlite3.Error as e:
             raise RuntimeError(f"Error accediendo a la base de datos: {e}")
         finally:
@@ -44,9 +44,15 @@ class Logica:
 
     # ---------------------------------------------------------
     # ---------------------------------------------------------
-   
+     
     def guardar_medida(self, medida: int):
+        """
+        Guarda una nueva medida en la base de datos.
         
+        Args:
+            medida (int): Valor de la medida que se desea guardar.
+        
+        """  
         conn = None
         try:
             #timestamp actual 

@@ -15,7 +15,7 @@ body {
     margin: 0;
 }
 
-/* Contenedor amplio, no solo un cuadrito */
+/* Contenedor */
 .container {
     width: 90%;
     max-width: 1000px;
@@ -64,7 +64,7 @@ button:hover {
     background-color: #f0f0f0; /* gris claro */
     border: 1px solid #ddd;
     border-radius: 8px;
-    font-size: 2.2em;   /* ✅ mucho más grande para destacar medida */
+    font-size: 2.2em;
     font-weight: bold;
     color: #111;
     min-height: 80px;

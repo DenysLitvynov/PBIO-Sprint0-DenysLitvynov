@@ -4,6 +4,8 @@ Fecha: 29-09-2025
 Descripción: Script principal de interacción en el frontend. Maneja eventos y funcionalidades de la interfaz.
 */
 
+// ----------------------------------------------------------
+
 document.addEventListener('DOMContentLoaded', ()=> {
     const boton = document.getElementById('obtenerMedidaBtn');
     const display = document.getElementById('medidaDisplay');
@@ -19,3 +21,6 @@ document.addEventListener('DOMContentLoaded', ()=> {
         }
     });
 });
+
+// ----------------------------------------------------------
+

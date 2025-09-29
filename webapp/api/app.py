@@ -21,7 +21,7 @@ from .routes import router as api_router
 app = FastAPI(title = "API REST para Proyecto Biometría y Medio Ambiente", version = "1.0.0")
 
 # Registrar el router de routes.py con prefijo /api
-app.include_router(api_router, prefix="/api")
+app.include_router(api_router, prefix="/api/v1")
 
 # ---------------------------------------------------------
 

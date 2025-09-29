@@ -13,6 +13,10 @@ from db_utils import DBInitializer
 # ---------------------------------------------------------
 
 def main():
+    """
+    Ejecuta métodos de la clase DBInitializer para crear y llenar de datos fake la bd.
+
+    """
     base_dir = Path(__file__).resolve().parent
     schema_path = base_dir / "sql" / "create_measurements.sql"
     insert_path = base_dir / "sql" / "insert_measurements.sql"
