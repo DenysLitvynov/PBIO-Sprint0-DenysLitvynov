@@ -35,7 +35,7 @@ class Logica:
                 "SELECT measurement, timestamp FROM measurements ORDER BY timestamp DESC LIMIT 1"
             )
             fila = cursor.fetchone()
-            return fila
+            return fila[0] if fila else None
         except sqlite3.Error as e:
             raise RuntimeError(f"Error accediendo a la base de datos: {e}")
         finally:
