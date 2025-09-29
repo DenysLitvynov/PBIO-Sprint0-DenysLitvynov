@@ -37,13 +37,13 @@ app.add_middleware(
 # ---------------------------------------------------------
 
 # Montar archivos estáticos para servir el frontend (HTML, CSS, JS) 
-# BASE_DIR = Path(__file__).resolve().parent.parent  # apunta al project-root
-# app.mount("/static", StaticFiles(directory=BASE_DIR / "static"), name="static")
+BASE_DIR = Path(__file__).resolve().parent.parent  # apunta al project-root
+app.mount("/static", StaticFiles(directory=BASE_DIR / "static"), name="static")
+TEMPLATES_DIR = BASE_DIR / "templates"
 
 @app.get("/")
 async def root():
-    #return FileResponse(Path("/templates/index.html"))
-    return {"message": "API REST corriendo. Usa /api/guardar (POST) o /api/ultima (GET)."}
+    return FileResponse(TEMPLATES_DIR / "index.html")
 
 # ---------------------------------------------------------
 
