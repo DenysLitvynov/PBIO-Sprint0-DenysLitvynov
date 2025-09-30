@@ -111,6 +111,7 @@ public:
   } // ()
 
   // .........................................................
+	// Emite un anuncio BLE en formato iBeacon estándar (UUID, major, minor, rssi).
   // .........................................................
   void emitirAnuncioIBeacon( uint8_t * beaconUUID, int16_t major, int16_t minor, uint8_t rssi ) {
 
@@ -119,6 +120,10 @@ public:
 	//
 	(*this).detenerAnuncio();
 	
+	Bluefruit.Advertising.stop();
+	Bluefruit.Advertising.clearData();
+	Bluefruit.ScanResponse.clearData();
+
 	//
 	// creo el beacon 
 	//
@@ -200,6 +205,11 @@ public:
 
 	const uint8_t tamanyoCarga = strlen( carga );
   */
+
+
+	// .........................................................
+	// Emite un anuncio BLE con carga personalizada (máx. 21 bytes).
+  // .........................................................
   void emitirAnuncioIBeaconLibre( const char * carga, const uint8_t tamanyoCarga ) {
 
 	(*this).detenerAnuncio(); 

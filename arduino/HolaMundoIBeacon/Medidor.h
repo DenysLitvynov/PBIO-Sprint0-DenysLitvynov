@@ -4,6 +4,7 @@
 #define MEDIDOR_H_INCLUIDO
 
 // ------------------------------------------------------
+// Clase Medidor: encapsula la lógica de lectura de sensores (CO2 y temperatura).
 // ------------------------------------------------------
 class Medidor {
 

@@ -15,6 +15,7 @@ void esperar (long tiempo) {
 }
 
 // ----------------------------------------------------------
+// Clase LED: encapsula el control de un LED conectado a un pin digital (Arduino).
 // ----------------------------------------------------------
 class LED {
 private:
