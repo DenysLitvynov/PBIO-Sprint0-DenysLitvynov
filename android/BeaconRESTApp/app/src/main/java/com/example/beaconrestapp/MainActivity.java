@@ -1,3 +1,13 @@
+/**
+ * Fichero: MainActivity.java
+ * Descripción: Clase principal de la app Android. Se encarga de inicializar la UI, configurar
+ *              el escáner de iBeacons y manejar el ciclo de permisos necesarios.
+ *              También envía las medidas captadas al servidor definido.
+ * @author Denys Litvynov Lymanets
+ * @version 1.0
+ * @since 25/09/2025
+ */
+
 package com.example.beaconrestapp;
 
 import android.content.pm.PackageManager;
@@ -8,6 +18,9 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.util.Log;
 import android.widget.Toast;
 
+// -------------------------------------------------------------------------------
+// -------------------------------------------------------------------------------
+
 public class MainActivity extends AppCompatActivity {
 
     private static final int CODIGO_PETICION_PERMISOS = 11223344;
@@ -15,10 +28,12 @@ public class MainActivity extends AppCompatActivity {
     private LogicaFake logicaFake = new LogicaFake();
     private TextView tvMedidas;
     // private String urlServidor = "https://webhook.site/d839c356-4b86-4e52-b23a-6dc7b339a7c9";
-
     private String baseUrl = "http://192.168.1.27:8000";  // <- Solo cambia ESTO (IP + puerto). Profesional: podría venir de config o UI
     private String endpointGuardar = "/api/v1/guardar-medida";  // <- Endpoint específico
     private static final String ETIQUETA_LOG = ">>>>";
+
+    // -------------------------------------------------------------------------------
+    // -------------------------------------------------------------------------------
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -45,6 +60,18 @@ public class MainActivity extends AppCompatActivity {
         escaner.iniciarEscaneoAutomatico("ProbaEnCasa");
     }
 
+    // -------------------------------------------------------------------------------
+    // -------------------------------------------------------------------------------
+
+    /**
+     * Callback invocado tras la solicitud de permisos en tiempo de ejecución.
+     * Verifica si el usuario concedió los permisos necesarios y, de ser así,
+     * reinicia el escaneo automático de iBeacons.
+     *
+     * @param requestCode int - Código de la petición realizada (para distinguir múltiples solicitudes).
+     * @param permissions String[] - Lista de permisos solicitados.
+     * @param grantResults int[] - Resultados de cada permiso (concedido o denegado).
+     */
     public void onRequestPermissionsResult(int requestCode, String[] permissions,
                                            int[] grantResults) {
         super.onRequestPermissionsResult( requestCode, permissions, grantResults);
@@ -64,4 +91,9 @@ public class MainActivity extends AppCompatActivity {
                 return;
         }
     } // ()
-}
+} // class
+
+// -----------------------------------------------------------------------------------
+// -----------------------------------------------------------------------------------
+// -----------------------------------------------------------------------------------
+// -----------------------------------------------------------------------------------

@@ -1,3 +1,11 @@
+/**
+ * Fichero: EscanerIBeacons.java
+ * Descripción: Clase que permite escanear iBeacons mediante Bluetooth LE.
+ * @author Denys Litvynov Lymanets
+ * @version 1.0
+ * @since 25/09/2025
+ */
+
 package com.example.beaconrestapp;
 
 import android.Manifest;
@@ -23,28 +31,42 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 
+// --------------------------------------------------------------------
+// --------------------------------------------------------------------
+
 public class EscanerIBeacons {
     private static final String ETIQUETA_LOG = ">>>>";
-
     private static final int CODIGO_PETICION_PERMISOS = 11223344;
-
     private BluetoothLeScanner elEscanner;
-
     private ScanCallback callbackDelEscaneo = null;
-
     private Context context;
     private Handler handler = new Handler();
     private OnBeaconDetectedListener listener;
 
+    // --------------------------------------------------------------------
+    // --------------------------------------------------------------------
+
     public interface OnBeaconDetectedListener {
         void onBeaconDetected(String jsonMedida);
     }
+
+    // --------------------------------------------------------------------
+    // --------------------------------------------------------------------
 
     public EscanerIBeacons(Context context, OnBeaconDetectedListener listener) {
         this.context = context;
         this.listener = listener;
     }
 
+    // --------------------------------------------------------------------
+    // --------------------------------------------------------------------
+
+    /**
+     * Muestra en Log información completa del dispositivo BLE detectado,
+     * incluyendo dirección, RSSI, bytes de la trama y descomposición iBeacon.
+     *
+     * @param resultado ScanResult del escaneo BLE
+     */
     private void mostrarInformacionDispositivoBTLE( ScanResult resultado ) {
 
         BluetoothDevice bluetoothDevice = resultado.getDevice();
@@ -101,6 +123,14 @@ public class EscanerIBeacons {
 
     } // ()
 
+    // --------------------------------------------------------------------
+    // --------------------------------------------------------------------
+
+    /**
+     * Inicia la búsqueda de un dispositivo BLE específico por su nombre.
+     *
+     * @param dispositivoBuscado Nombre exacto del dispositivo BLE
+     */
     private void buscarEsteDispositivoBTLE(final String dispositivoBuscado ) {
         Log.d(ETIQUETA_LOG, " buscarEsteDispositivoBTLE(): empieza ");
 
@@ -166,6 +196,12 @@ public class EscanerIBeacons {
     } // ()
     // ()
 
+    // --------------------------------------------------------------------
+    // --------------------------------------------------------------------
+
+    /**
+     * Detiene la búsqueda de dispositivos BLE si hay un callback activo.
+     */
     private void detenerBusquedaDispositivosBTLE() {
 
         if ( this.callbackDelEscaneo == null ) {
@@ -187,6 +223,14 @@ public class EscanerIBeacons {
 
     } // ()
 
+    // --------------------------------------------------------------------
+    // --------------------------------------------------------------------
+
+    /**
+     * Inicializa el adaptador Bluetooth del dispositivo.
+     * Verifica que Bluetooth esté disponible y habilitado.
+     * Solicita los permisos necesarios dependiendo de la versión de Android.
+     */
     public void inicializarBlueTooth() {
         Log.i(ETIQUETA_LOG, "Inicializando Bluetooth...");
 
@@ -253,6 +297,15 @@ public class EscanerIBeacons {
         }
     }
 
+    // --------------------------------------------------------------------
+    // --------------------------------------------------------------------
+
+    /**
+     * Inicia un escaneo de iBeacons de manera automática buscando un dispositivo
+     * por su nombre. El escaneo se repite cada 30 segundos.
+     *
+     * @param nombreDispositivo Nombre exacto del dispositivo BLE a buscar
+     */
     public void iniciarEscaneoAutomatico(String nombreDispositivo) {
         inicializarBlueTooth();
         buscarEsteDispositivoBTLE(nombreDispositivo);
@@ -263,8 +316,23 @@ public class EscanerIBeacons {
         }, 30000);
     }
 
+    // --------------------------------------------------------------------
+    // --------------------------------------------------------------------
+
+    /**
+     * Convierte una trama iBeacon en un JSON simple con la medida
+     * contenida en el campo `minor`.
+     *
+     * @param tib TramaIBeacon detectada durante el escaneo
+     * @return String JSON con la medida, por ejemplo: {"medida": 123}
+     */
     private String convertirTramaAJson(TramaIBeacon tib) {
         int medida = Utilidades.bytesToInt(tib.getMinor());
         return "{\"medida\": " + medida + "}";
     }
-}
+}  // class
+
+// -----------------------------------------------------------------------------------
+// -----------------------------------------------------------------------------------
+// -----------------------------------------------------------------------------------
+// -----------------------------------------------------------------------------------

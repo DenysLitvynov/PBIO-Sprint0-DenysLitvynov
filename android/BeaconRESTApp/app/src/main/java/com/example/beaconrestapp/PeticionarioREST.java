@@ -1,4 +1,12 @@
-    package com.example.beaconrestapp;
+/**
+ * Fichero: PeticionarioREST.java
+ * Descripción: Clase que gestiona peticiones REST en segundo plano usando AsyncTask.
+ * @author Denys Litvynov Lymanets
+ * @version 1.0
+ * @since 25/09/2025
+ */
+
+package com.example.beaconrestapp;
 
 import android.os.AsyncTask;
 import android.util.Log;
@@ -32,6 +40,14 @@ public class PeticionarioREST extends AsyncTask<Void, Void, Boolean> {
 
     // --------------------------------------------------------------------
     // --------------------------------------------------------------------
+    /**
+     * Inicializa la petición REST con los parámetros y ejecuta el AsyncTask.
+     *
+     * @param metodo Método HTTP ("GET", "POST", "PUT", ...)
+     * @param urlDestino URL a la que se envía la petición
+     * @param cuerpo JSON u otro cuerpo a enviar (puede ser null)
+     * @param laRespuesta Objeto que recibe la respuesta vía callback
+     */
     public void hacerPeticionREST(String metodo, String urlDestino, String cuerpo, RespuestaREST laRespuesta) {
         this.elMetodo = metodo;
         this.urlDestino = urlDestino;
@@ -43,16 +59,18 @@ public class PeticionarioREST extends AsyncTask<Void, Void, Boolean> {
 
     // --------------------------------------------------------------------
     // --------------------------------------------------------------------
+    /**
+     * Envía la petición HTTP en segundo plano y obtiene la respuesta.
+     *
+     * @param params No se usa (AsyncTask requiere Void...)
+     * @return true si la petición se completó correctamente, false si hubo error
+     */
     @Override
     protected Boolean doInBackground(Void... params) {
         Log.d("clienterestandroid", "doInBackground()");
 
         try {
-
-            // envio la peticion
-
-            // pagina web para hacer pruebas: URL url = new URL("https://httpbin.org/html");
-            // ordinador del despatx 158.42.144.126 // OK URL url = new URL("http://158.42.144.126:8080");
+            // envio la petición
 
             Log.d("clienterestandroid", "doInBackground() me conecto a >" + urlDestino + "<");
 
@@ -122,6 +140,11 @@ public class PeticionarioREST extends AsyncTask<Void, Void, Boolean> {
 
     // --------------------------------------------------------------------
     // --------------------------------------------------------------------
+    /**
+     * Llama al callback con el resultado de la petición tras terminar doInBackground.
+     *
+     * @param comoFue true si doInBackground terminó bien, false si hubo error
+     */
     protected void onPostExecute(Boolean comoFue) {
         // llamado tras doInBackground()
         Log.d("clienterestandroid", "onPostExecute() comoFue = " + comoFue);
@@ -134,6 +157,11 @@ public class PeticionarioREST extends AsyncTask<Void, Void, Boolean> {
         void callback(int codigo, String cuerpo);
     }
 
-} // class
+}  // class
+
+// -----------------------------------------------------------------------------------
+// -----------------------------------------------------------------------------------
+// -----------------------------------------------------------------------------------
+// -----------------------------------------------------------------------------------
 
 
