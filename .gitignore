@@ -1,0 +1,18 @@
+# Python virtual environment
+.venv/
+
+# Python cache files
+__pycache__/
+*.pyc
+
+# Archivos de bases de datos locales (ignora todos los .db)
+*.db
+
+# Archivos temporales de Vim
+*.swp
+*.swo
+*.swn
+*.swm
+*.swl
+*.swh
+*.swk
