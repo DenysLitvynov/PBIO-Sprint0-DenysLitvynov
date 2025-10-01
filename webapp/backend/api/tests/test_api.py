@@ -16,7 +16,7 @@ from logic.logica import Logica
 
 client = TestClient(app)
 
-# Sobrescribir la dependencia get_logica para usar la BD temporal
+# Con este método podemos crear una instancia de la logica pasandole la bd de pruebas.  
 def override_get_logica(db_path):
     def _get_logica():
         return Logica(ruta_bd=db_path)

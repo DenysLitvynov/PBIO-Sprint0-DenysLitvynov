@@ -6,6 +6,8 @@ Descripción: Script principal de interacción en el frontend. Maneja eventos y 
 
 // ----------------------------------------------------------
 
+// Se ejecuta al presionar el boton de la interfaz. Llama al método de la lógica fake 
+// muestra el resultado devuelto por la pantalla. 
 document.addEventListener('DOMContentLoaded', ()=> {
     const boton = document.getElementById('obtenerMedidaBtn');
     const display = document.getElementById('medidaDisplay');
