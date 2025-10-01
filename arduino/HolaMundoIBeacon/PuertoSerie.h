@@ -10,6 +10,7 @@
 #define PUERTO_SERIE_H_INCLUIDO
 
 // ----------------------------------------------------------
+// Clase PuertoSerie: encapsula la inicialización y uso del puerto serie de Arduino.
 // ----------------------------------------------------------
 class PuertoSerie  {
 
