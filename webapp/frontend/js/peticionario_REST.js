@@ -6,14 +6,15 @@ Descripción: Módulo encargado de realizar peticiones REST al backend. Contiene
 
 // ----------------------------------------------------------
 
-class PeticionarioREST {
+export class PeticionarioREST {
 
     // ----------------------------------------------------------
     // Método que realiza peticiones HTTP a la API y devuelve la respuesta en JSON como promesa.  
-    // 
-    // method : string url : string body : json | null ->
-    //                 hacerPeticionRest()
-    //  -> Promise<json>
+    //
+    // method : string
+    // url    : string
+    // body   : json | null
+    // -> hacerPeticionRest() -> Promise<json>
     // ----------------------------------------------------------
     async hacerPeticionRest(method, url, body = null) {
         const options = {
@@ -27,7 +28,7 @@ class PeticionarioREST {
         }
         const response = await fetch(url, options);
         if (!response.ok) {
-            throw new Error('Error: ${response.status}');
+            throw new Error(`Error: ${response.status}`);
         }
         return await response.json();
     }

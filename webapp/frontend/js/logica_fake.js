@@ -4,9 +4,11 @@ Fecha: 29-09-2025
 Descripción: Script con lógica simulada (fake) para pruebas de la aplicación sin conexión al backend real.
 */
 
+import { PeticionarioREST } from './peticionario_REST.js';
+
 // ----------------------------------------------------------
 
-class LogicaFake {
+export class LogicaFake {
     constructor() {
         this.peticionario = new PeticionarioREST();
     }

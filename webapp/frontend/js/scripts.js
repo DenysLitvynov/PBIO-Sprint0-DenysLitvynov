@@ -4,6 +4,8 @@ Fecha: 29-09-2025
 Descripción: Script principal de interacción en el frontend. Maneja eventos y funcionalidades de la interfaz.
 */
 
+import { LogicaFake } from './logica_fake.js';
+
 // ----------------------------------------------------------
 
 // Se ejecuta al presionar el boton de la interfaz. Llama al método de la lógica fake 

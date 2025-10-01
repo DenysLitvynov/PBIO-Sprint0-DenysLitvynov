@@ -28,7 +28,7 @@ public class MainActivity extends AppCompatActivity {
     private LogicaFake logicaFake = new LogicaFake();
     private TextView tvMedidas;
     // private String urlServidor = "https://webhook.site/d839c356-4b86-4e52-b23a-6dc7b339a7c9";
-    private String baseUrl = "http://192.168.1.27:8000";  // <- Solo cambia ESTO (IP + puerto). Profesional: podría venir de config o UI
+    private String baseUrl = "http://192.168.1.30:8000";  // <- Solo cambia ESTO (IP + puerto).
     private String endpointGuardar = "/api/v1/guardar-medida";  // <- Endpoint específico
     private static final String ETIQUETA_LOG = ">>>>";
 
@@ -57,7 +57,7 @@ public class MainActivity extends AppCompatActivity {
 
         Log.d(ETIQUETA_LOG, " onCreate(): termina ");
 
-        escaner.iniciarEscaneoAutomatico("ProbaEnCasa");
+        escaner.iniciarEscaneoAutomatico("EmisoraBLE");
     }
 
     // -------------------------------------------------------------------------------
