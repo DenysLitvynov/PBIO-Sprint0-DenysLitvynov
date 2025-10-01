@@ -11,7 +11,7 @@ from os import stat
 from re import I
 from fastapi import APIRouter, Depends, HTTPException
 from pydantic import BaseModel
-from logic.logica import Logica
+from ..logic.logica import Logica
 from pathlib import Path
 
 # ---------------------------------------------------------

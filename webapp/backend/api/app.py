@@ -37,20 +37,14 @@ app.add_middleware(
 # ---------------------------------------------------------
 
 # Montar archivos estáticos para servir el frontend (HTML, CSS, JS) 
-BASE_DIR = Path(__file__).resolve().parent.parent  # apunta al project-root
-app.mount("/static", StaticFiles(directory=BASE_DIR / "static"), name="static")
-TEMPLATES_DIR = BASE_DIR / "templates"
+BASE_DIR = Path(__file__).resolve().parent.parent.parent 
+FRONTEND_DIR = BASE_DIR / "frontend"
+app.mount("/js", StaticFiles(directory=FRONTEND_DIR / "js"), name="js")
+app.mount("/css", StaticFiles(directory=FRONTEND_DIR / "css"), name="css")
 
 @app.get("/")
 async def root():
-    return FileResponse(TEMPLATES_DIR / "index.html")
-
-# ---------------------------------------------------------
-
-# Bloque para ejecutar el servidor directamente con python app.py
-if __name__ == "__main__":
-    import uvicorn
-    uvicorn.run("app:app", host="127.0.0.1", port=8000, reload=True)  # reload=True para hot-reload
+    return FileResponse(FRONTEND_DIR / "index.html")
 
 # ---------------------------------------------------------
 # ---------------------------------------------------------
